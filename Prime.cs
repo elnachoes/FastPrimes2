@@ -14,7 +14,7 @@ namespace FastPrimes2 {
             {
                 return true;
             }
-            else if (number % 2 == 0 || number % 3 == 0 || number % 5 == 0 || number % 7 == 0 || number % 11 == 0) 
+            if (number % 2 == 0 || number % 3 == 0 || number % 5 == 0 || number % 7 == 0 || number % 11 == 0) 
             {
                 return false;
             }
@@ -32,7 +32,7 @@ namespace FastPrimes2 {
         }
 
         //both PossiblePrimes and LastPossiblePrime are initialized in main before this function executes
-        public static void QueuePossiblePrimes(ref List<UInt32> PossiblePrimes,ref UInt32 LastPossiblePrime)
+        public static void QueuePossiblePrimes(List<UInt32> PossiblePrimes, ref UInt32 LastPossiblePrime, UInt32 QueueSize)
         {
 
             if (LastPossiblePrime == 2)
@@ -40,13 +40,21 @@ namespace FastPrimes2 {
                 PossiblePrimes.Add(LastPossiblePrime);
                 ++LastPossiblePrime;
             }
-            while (PossiblePrimes.Count < 32)
+            while (PossiblePrimes.Count < QueueSize)
             {
                 PossiblePrimes.Add(LastPossiblePrime);
                 LastPossiblePrime += 2;
             }
+        }
 
-            Console.WriteLine();
+        public static List<UInt32> SortFoundPrimes(List<UInt32> FoundPrimes)
+        {
+            List<UInt32> Sort = new List<UInt32>();
+            foreach (UInt32 prime in FoundPrimes)
+            {
+
+            }
+            return Sort;
         }
     }
 }
