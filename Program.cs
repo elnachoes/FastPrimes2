@@ -11,48 +11,36 @@ namespace FastPrimes2 {
         public static void Main(string[] args) {
 
             var Watch = new Stopwatch();
-            Watch.Start();
 
-            const UInt32 PossiblePrimesQueueSize = 10000;
+            UInt32 PositionPrime;
+            UInt32 PossiblePrimesChunkSize;
 
-            List<UInt32> PossiblePrimes = new List<UInt32>();
-            List<UInt32> FoundPrimes = new List<UInt32>();
-            
-            UInt32 NthPositionPrime = 100;
-            UInt32 LastPossiblePrime = 2;
-            UInt32 CurrentPrimePosition = 1;
-
-            object LockObject = new object();
-
-            Prime.QueuePossiblePrimes(PossiblePrimes, ref LastPossiblePrime, PossiblePrimesQueueSize);
-
-            while (NthPositionPrime >= CurrentPrimePosition)
+            if (args.Length > 0)
             {
-
-                if (PossiblePrimes.Count != PossiblePrimesQueueSize)
-                {
-                    Prime.QueuePossiblePrimes(PossiblePrimes, ref LastPossiblePrime, PossiblePrimesQueueSize);
-                }
-
-                var ParrallelForEachResult = Parallel.ForEach(PossiblePrimes, new ParallelOptions(), (PossibleValue) =>
-                {
-                    if (Prime.CheckIfPrime(PossibleValue))
-                    {
-                        lock (LockObject)
-                        {
-                            FoundPrimes.Add(PossibleValue);
-                            ++CurrentPrimePosition;
-                        }
-                    }
-                });
-
-                PossiblePrimes.Clear();
+                PositionPrime = Convert.ToUInt32(args[0]);
+            }
+            else
+            {
+                Console.Error.WriteLine("Error : enter a position of prime number. OPTIONAL : second argument PossiblePrimesChunkSize");
+                return;
             }
 
-            FoundPrimes = FoundPrimes.OrderBy(p => p).Take(((int)NthPositionPrime)).ToList();
+            if (args.Length == 2)
+            {
+                PossiblePrimesChunkSize = Convert.ToUInt32(args[1]);
+            }
+            else
+            {
+                PossiblePrimesChunkSize = 1;
+            }
+
+            Watch.Start();
+            
+            UInt32 TargetPrime = Prime.FindNPositionPrime(PositionPrime, PossiblePrimesChunkSize);
 
             Watch.Stop();
-            Console.WriteLine($"prime number {NthPositionPrime} : {FoundPrimes[(int)NthPositionPrime - 1]}");
+
+            Console.WriteLine($"prime number {PositionPrime} : {TargetPrime}");
             Console.WriteLine($"{Watch.Elapsed}");
         }
     }

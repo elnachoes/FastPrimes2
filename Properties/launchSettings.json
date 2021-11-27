@@ -2,7 +2,8 @@
   "profiles": {
     "FastPrimes2": {
       "commandName": "Project",
-      "commandLineArgs": "20"
+      "commandLineArgs": "1"
     }
   }
+}
 }
