@@ -1,4 +1,6 @@
 # FastPrimes2
+![image](https://user-images.githubusercontent.com/31595608/147173638-97da4a61-78a9-40f1-a840-a0c6b4a41dd8.png)
+(This image was taken on a system that had a Ryzen 9 5900x 12 core 24 thread processor)
 
 This is a cool program I used to learn a little bit about threading, the parallel foreach function in C#, and C# in general
 
